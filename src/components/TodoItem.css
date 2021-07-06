@@ -3,9 +3,38 @@
     font-weight: 300;
     font-size: 24px;
     color: #4d4d4d;
+    border-bottom: 1px solid #eee;
+    padding: 10px 5px;
+    display: flex;
 }
 
-.TodoItem-complete {
+.TodoItem:last-child {
+    border-bottom: none;
+}
+
+.TodoItem > p {
+    margin: 0 0 0 10px;
+    user-select: none;
+    transition-duration: .4s;
+}
+
+.TodoItem-complete > p {
     text-decoration: line-through;
-    opacity: .3;
+    opacity: .2;
+    transition-duration: .4s;
+}
+
+.delImg {
+    width: 16px;
+    height: 16px;
+    margin: auto 10px auto auto;
+    opacity: 0;
+}
+
+.TodoItem:hover .delImg {
+    opacity: .4;
+}
+
+.delImg:hover {
+    opacity: 1 !important;
 }

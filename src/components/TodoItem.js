@@ -1,20 +1,24 @@
 import React, { Component } from 'react';
 import './TodoItem.css';
+import checkImg from '../img/check.png';
+import delImg from '../img/cancel.png';
+import checkCompleteImg from '../img/check-complete.png';
 var classNames = require('classnames');
 
-class TodoItem extends Component {
+
+class TodoItem extends Component {  
     render() {
-        // let className = 'TodoItem';
-        // const { item } = this.props;
-        // if (item.isComplete)
-        //     className += ' TodoItem-complete';
-        var completeClass = classNames({
-            'TodoItem': true,
-            'TodoItem-complete': this.props.item.isComplete
-        });
+        const { item, onClick, deleteItem } = this.props;
+        let url = checkImg;
+        if (item.isComplete)
+            url = checkCompleteImg;
         return (
-            <div className={ completeClass }>
-                <p>{this.props.item.title}</p>
+            <div className={ classNames('TodoItem', {
+                'TodoItem-complete': item.isComplete
+            }) }>
+                <img onClick={onClick} src={url} />
+                <p>{item.title}</p>
+                <img onClick={deleteItem} src={delImg} className={'delImg'} />
             </div>
         );
     };
