@@ -22,6 +22,7 @@ class App extends Component {
     this.onChange = this.onChange.bind(this);
     this.checkAllItem = this.checkAllItem.bind(this);
     this.filterItem = this.filterItem.bind(this);
+    this.clearCompleted = this.clearCompleted.bind(this);
   }
 
   onItemClick(item) {
@@ -50,6 +51,16 @@ class App extends Component {
         ]
       });
     };
+  }
+
+  clearCompleted() {
+    const { todoItems } = this.state;
+    let itemLeft = todoItems.filter(item => !item.isComplete);
+    this.setState({
+      todoItems: [
+        ...itemLeft
+      ]
+    });
   }
 
   onKeyUp(event) {
@@ -101,10 +112,15 @@ class App extends Component {
   render() {
     const { todoItems, newItem, currentFilter } = this.state;
     let items = todoItems;
+    let itemLeft = 0;
+
     if(currentFilter === 'active')
       items = todoItems.filter(item => !item.isComplete);
     if(currentFilter === 'completed')
       items = todoItems.filter(item => item.isComplete);
+    
+    for(let item of todoItems)
+      if(!item.isComplete) itemLeft++;
 
     return (
     <div className="App"> 
@@ -126,11 +142,13 @@ class App extends Component {
 
       {items.length === 0 && 'Nothing here'}
       <div className="footer">
+        <div className="itemLeft">{itemLeft} item left</div>
         <ul className="filter">
           <li className={ classNames('all', {'selected': currentFilter==='all'}) } onClick={this.filterItem}>All</li>
           <li className={ classNames('active', {'selected': currentFilter==='active'}) } onClick={this.filterItem}>Active</li>
           <li className={ classNames('completed', {'selected': currentFilter==='completed'}) } onClick={this.filterItem}>Completed</li>
         </ul>
+        <div className="clearCompleted" onClick={this.clearCompleted}>Clear completed</div>
       </div>
     </div>
     );
